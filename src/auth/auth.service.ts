@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterDto } from './dto/register.dto';
@@ -28,5 +28,19 @@ export class AuthService {
 
     async register(dto: RegisterDto) {
       return this.usersService.create(dto);
+    }
+
+    async googleLogin(req) {
+      if (!req.user) {
+        return new UnauthorizedException();
+      }
+
+      const user = await this.usersService.findOneOrCreate(req.user);
+
+      if (!user) {
+        return new UnauthorizedException();
+      }
+  
+      return this.login(user);
     }
 }

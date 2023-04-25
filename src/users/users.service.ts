@@ -16,4 +16,12 @@ export class UsersService {
   async findOne(email: string): Promise<User | undefined> {
     return this.usersRepository.findOne({ where: {email: email} })
   }
+
+  async findOneOrCreate(user: Partial<User>) {
+    const existingUser = await this.findOne(user.email);
+    if (existingUser) {
+      return existingUser;
+    }
+    return this.create(user);
+  }
 }
