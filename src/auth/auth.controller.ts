@@ -1,5 +1,5 @@
-import { Controller, Get, Request, Post, UseGuards, Body } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { Controller, Get, Request, Post, UseGuards, Body, Response } from '@nestjs/common';
+import { AuthService, TokenObject } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { RegisterDto } from './dto/register.dto';
 import { GoogleOAuthGuard } from './guards/google-oauth.guard';
@@ -28,8 +28,12 @@ export class AuthController {
 
   @Get('google-redirect')
   @UseGuards(GoogleOAuthGuard)
-  googleAuthRedirect(@Request() req) {
-    return this.authService.googleLogin(req);
+  async googleAuthRedirect(
+    @Request() req,
+    @Response() res
+  ) {
+    const tokenObj: TokenObject = await this.authService.googleLogin(req);
+    return res.redirect('http://localhost:3000/login/callback?token=' + tokenObj.access_token)
   }
 
   @Get('linkedin')
@@ -38,8 +42,12 @@ export class AuthController {
 
   @Get('linkedin-redirect')
   @UseGuards(LinkedInOAuthGuard)
-  linkedInAuthRedirect(@Request() req) {
-    return this.authService.linkedInLogin(req);
+  async linkedInAuthRedirect(
+    @Request() req,
+    @Response() res
+  ) {
+    const tokenObj: TokenObject = await this.authService.linkedInLogin(req);
+    return res.redirect('http://localhost:3000/login/callback?token=' + tokenObj.access_token)
   }
 
 }

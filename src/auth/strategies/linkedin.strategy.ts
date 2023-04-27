@@ -8,7 +8,7 @@ export class LinkedInStrategy extends PassportStrategy(Strategy, 'linkedin') {
     super({
         clientID: process.env.LINKEDIN_CLIENT_ID,
         clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
-        callbackURL: "http://localhost:3000/auth/linkedin-redirect",
+        callbackURL: "http://localhost:8080/auth/linkedin-redirect",
         scope: ['r_emailaddress', 'r_liteprofile'],
       });
   }

@@ -2,7 +2,9 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterDto } from './dto/register.dto';
-
+export interface TokenObject {
+  access_token: string;
+}
 @Injectable()
 export class AuthService {
   constructor(
@@ -19,8 +21,8 @@ export class AuthService {
     return null;
   }
 
-  async login(user: any) {
-    const payload = { email: user.email, sub: user.uuid };
+  async login(user: any): Promise<TokenObject> {
+    const payload = { ...user, password: undefined };
     return {
       access_token: this.jwtService.sign(payload),
     };
@@ -30,29 +32,29 @@ export class AuthService {
     return this.usersService.create(dto);
   }
 
-  async googleLogin(req) {
+  async googleLogin(req): Promise<TokenObject> {
     if (!req.user) {
-      return new UnauthorizedException();
+      throw new UnauthorizedException();
     }
 
     const user = await this.usersService.findOneOrCreate(req.user);
 
     if (!user) {
-      return new UnauthorizedException();
+      throw new UnauthorizedException();
     }
 
     return this.login(user);
   }
 
-  async linkedInLogin(req) {
+  async linkedInLogin(req): Promise<TokenObject> {
     if (!req.user) {
-      return new UnauthorizedException();
+      throw new UnauthorizedException();
     }
 
     const user = await this.usersService.findOneOrCreate(req.user);
 
     if (!user) {
-      return new UnauthorizedException();
+      throw new UnauthorizedException();
     }
 
     return this.login(user);
