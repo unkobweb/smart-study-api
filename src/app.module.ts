@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { ConfigModule } from '@nestjs/config';
+import { EmailModule } from './email/email.module';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { ConfigModule } from '@nestjs/config';
       entities: [User],
       synchronize: !!process.env.DB_SYNC || false,
     }),
-    AuthModule, 
+    AuthModule,
+    EmailModule, 
     UsersModule
   ],
   controllers: [AppController],
