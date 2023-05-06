@@ -39,10 +39,6 @@ export class AuthService {
 
     const user = await this.usersService.findOneOrCreate(req.user);
 
-    if (!user) {
-      throw new UnauthorizedException();
-    }
-
     return this.login(user);
   }
 
@@ -52,10 +48,6 @@ export class AuthService {
     }
 
     const user = await this.usersService.findOneOrCreate(req.user);
-
-    if (!user) {
-      throw new UnauthorizedException();
-    }
 
     return this.login(user);
   }
