@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterDto } from './dto/register.dto';
@@ -29,6 +29,13 @@ export class AuthService {
   }
 
   async register(dto: RegisterDto) {
+    if(dto.password !== dto.confirmPassword){
+      throw new BadRequestException(["confirmPassword must be the same as password"])
+    }
+    const user = await this.usersService.findOne(dto.email);
+    if(user != null){
+      throw new BadRequestException(["email already exist"])
+    }
     return this.usersService.create(dto);
   }
 
