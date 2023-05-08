@@ -1,0 +1,12 @@
+{
+  "rootDir": "..",
+  "collectCoverageFrom": [
+    "<rootDir>/src/**/*.service.ts", 
+    "<rootDir>/src/**/*.service.ts", 
+    "<rootDir>/src/**/*.entity.ts"
+  ],
+  "testMatch": ["<rootDir>/src/**/*.spec.ts"],
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  }
+}
