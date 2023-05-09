@@ -11,7 +11,7 @@ export class UsersService {
   ) { }
 
   async create(user: Partial<User>): Promise<User> {
-    user.password = await argon2.hash(user.password);
+    if (user.password) user.password = await argon2.hash(user.password);
     return this.usersRepository.save(user);
   }
 

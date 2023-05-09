@@ -1,7 +1,7 @@
 import { Controller, Get, Request, Post, UseGuards } from '@nestjs/common';
 import { AppService } from './app.service';
 // import { AuthService } from './auth/auth.service';
-// import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 // import { EmailService } from './email/email.service';
 
 @Controller()
@@ -16,11 +16,12 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  // @UseGuards(JwtAuthGuard)
-  // @Get('profile')
-  // getProfile(@Request() req) {
-  //   return req.user;
-  // }
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  getProfile(@Request() req) {
+    console.log("req.user", req.user)
+    return req.user;
+  }
 
   // @Get('email')
   // sendMailTest() {

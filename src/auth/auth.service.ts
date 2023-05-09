@@ -32,11 +32,13 @@ export class AuthService {
     if(dto.password !== dto.confirmPassword){
       throw new BadRequestException(["confirmPassword must be the same as password"])
     }
+    delete dto.confirmPassword;
     const user = await this.usersService.findOne(dto.email);
     if(user != null){
       throw new BadRequestException(["email already exist"])
     }
-    return this.usersService.create(dto);
+    const newUser = await this.usersService.create(dto);
+    return this.login(newUser);
   }
 
   async googleLogin(req): Promise<TokenObject> {
