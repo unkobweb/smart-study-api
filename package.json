@@ -13,11 +13,11 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "jest --config ./test/jest-unit.json",
-    "test:watch": "jest --watch --config ./test/jest-unit.json",
-    "test:cov": "jest --coverage --config ./test/jest-unit.json",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test": "doppler run -- jest --config ./test/jest-unit.json",
+    "test:watch": "doppler run -- jest --watch --config ./test/jest-unit.json",
+    "test:cov": "doppler run -- jest --coverage --config ./test/jest-unit.json",
+    "test:debug": "doppler run -- node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "doppler run -- jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^1.8.1",

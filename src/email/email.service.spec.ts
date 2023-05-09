@@ -43,4 +43,20 @@ describe('EmailService', () => {
       context,
     });
   });
+
+  it('should send email successfully without context', async () => {
+    const to = 'test@example.com'
+    const subject = 'Test email';
+    const templateName = 'test';
+
+    await emailService.sendEmail(to, subject, templateName);
+
+    expect(mockMailerService.sendMail).toHaveBeenCalledTimes(1);
+    expect(mockMailerService.sendMail).toHaveBeenCalledWith({
+      to,
+      subject,
+      template: './confirmation',
+      context: {},
+    });
+  });
 });
