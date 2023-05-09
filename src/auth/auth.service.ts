@@ -21,7 +21,10 @@ export class AuthService {
     return null;
   }
 
-  async login(user: any): Promise<TokenObject> {
+  // TODO: implement login() method
+  // async credentialLogin() 
+
+  async generateJwtToken(user: any): Promise<TokenObject> {
     const payload = { ...user, password: undefined };
     return {
       access_token: this.jwtService.sign(payload),
@@ -38,7 +41,7 @@ export class AuthService {
       throw new BadRequestException(["email already exist"])
     }
     const newUser = await this.usersService.create(dto);
-    return this.login(newUser);
+    return this.generateJwtToken(newUser);
   }
 
   async googleLogin(req): Promise<TokenObject> {
@@ -48,7 +51,7 @@ export class AuthService {
 
     const user = await this.usersService.findOneOrCreate(req.user);
 
-    return this.login(user);
+    return this.generateJwtToken(user);
   }
 
   async linkedInLogin(req): Promise<TokenObject> {
@@ -58,6 +61,6 @@ export class AuthService {
 
     const user = await this.usersService.findOneOrCreate(req.user);
 
-    return this.login(user);
+    return this.generateJwtToken(user);
   }
 }
