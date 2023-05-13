@@ -2,6 +2,7 @@ import { Controller, Get, Request, Post, UseGuards, Body, Response } from '@nest
 import { AuthService, TokenObject } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { RegisterDto } from './dto/register.dto';
+import { LoginDto } from './dto/login.dto';
 import { GoogleOAuthGuard } from './guards/google-oauth.guard';
 import { LinkedInOAuthGuard } from './guards/linkedin-oauth.guard';
 
@@ -14,6 +15,13 @@ export class AuthController {
     @Body() dto: RegisterDto
   ) {
     return this.authService.register(dto);
+  }
+
+  @Post('login')
+  async login(
+    @Body() dto: LoginDto
+  ) {
+    return this.authService.credentialLogin(dto);
   }
 
   @Get('google')

@@ -2,6 +2,8 @@ import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterDto } from './dto/register.dto';
+import { LoginDto } from './dto/login.dto';
+import * as argon2 from "argon2";
 export interface TokenObject {
   access_token: string;
 }
@@ -23,6 +25,13 @@ export class AuthService {
 
   // TODO: implement login() method
   // async credentialLogin() 
+  async credentialLogin(dto: LoginDto) {
+    const user = await this.usersService.findOne(dto.email);
+    if(user == null || user.password == null || !(await argon2.verify(user.password, dto.password))){
+      throw new UnauthorizedException("invalid credentials")
+    }
+    return this.generateJwtToken(user);
+  }
 
   async generateJwtToken(user: any): Promise<TokenObject> {
     const payload = { ...user, password: undefined };
