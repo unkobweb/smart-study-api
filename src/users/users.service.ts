@@ -15,8 +15,16 @@ export class UsersService {
     return this.usersRepository.save(user);
   }
 
+  async findOneByUuid(uuid: string): Promise<User | undefined> {
+    return this.usersRepository.findOne({ where: { uuid: uuid } })
+  }
+
   async findOne(email: string): Promise<User | undefined> {
     return this.usersRepository.findOne({ where: { email: email } })
+  }
+
+  async update(user: Partial<User>): Promise<User> {
+    return this.usersRepository.save(user);
   }
 
   async findOneOrCreate(user: Partial<User>) {

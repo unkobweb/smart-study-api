@@ -22,6 +22,11 @@ export class User {
 
   @Column({nullable: true})
   city?: string;
+  
+  @Column({nullable: true})
+  secret2Fa?: string;
 
+  @Column({nullable: false, default: false})
+  enabled2Fa: boolean;
   // TODO : add profile picture
 }

@@ -16,13 +16,6 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Get('profile')
-  getProfile(@Request() req) {
-    console.log("req.user", req.user)
-    return req.user;
-  }
-
   // @Get('email')
   // sendMailTest() {
   //   return this.emailService.sendEmail("sieg.alexandre@gmail.com", "Houston, we have a problem", "test", {name: "Alex", url: "https://www.google.com"})
