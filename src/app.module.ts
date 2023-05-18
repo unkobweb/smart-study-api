@@ -5,8 +5,10 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
+import { Course } from './entities/course.entity';
 import { ConfigModule } from '@nestjs/config';
 import { EmailModule } from './email/email.module';
+import { CoursesModule } from './courses/courses.module';
 
 @Module({
   imports: [
@@ -18,12 +20,12 @@ import { EmailModule } from './email/email.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [User],
+      entities: [User, Course],
       synchronize: !!process.env.DB_SYNC || false,
     }),
     AuthModule,
     EmailModule, 
-    UsersModule
+    UsersModule, CoursesModule
   ],
   controllers: [AppController],
   providers: [AppService],
