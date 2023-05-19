@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn ,UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn ,UpdateDateColumn } from "typeorm";
+import { User } from "./user.entity";
 
 @Entity()
 export class Course {
@@ -19,9 +20,6 @@ export class Course {
   tags?: number;
 
   @Column({ nullable: true })
-  user_uuid?: string;
-
-  @Column({ nullable: true })
   price?: number;
 
   @CreateDateColumn()
@@ -32,4 +30,7 @@ export class Course {
 
   @DeleteDateColumn()
   deleted_at: Date;
+
+  @ManyToOne(type => User, user => user.courses)
+  user: User;
 }

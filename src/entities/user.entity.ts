@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Course } from "./course.entity";
 
 @Entity()
 export class User {
@@ -29,4 +30,7 @@ export class User {
   @Column({nullable: false, default: false})
   enabled2Fa: boolean;
   // TODO : add profile picture
+
+  @OneToMany(type => Course, course => course.user)
+  courses: Course[];
 }
