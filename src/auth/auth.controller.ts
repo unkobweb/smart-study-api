@@ -67,7 +67,11 @@ export class AuthController {
     @Response() res
   ) {
     const tokenObj = await this.authService.googleLogin(req);
-    return res.redirect('http://localhost:3000/login/callback?token=' + tokenObj.token)
+    if (tokenObj.type == '2fa') {
+      return res.redirect('http://localhost:3000/login/callback?mfatoken=' + tokenObj.token)
+    } else {
+      return res.redirect('http://localhost:3000/login/callback?token=' + tokenObj.token)
+    }
   }
 
   @Get('linkedin')
@@ -81,7 +85,11 @@ export class AuthController {
     @Response() res
   ) {
     const tokenObj: TokenObject = await this.authService.linkedInLogin(req);
-    return res.redirect('http://localhost:3000/login/callback?token=' + tokenObj.token)
+    if (tokenObj.type == '2fa') {
+      return res.redirect('http://localhost:3000/login/callback?mfatoken=' + tokenObj.token)
+    } else {
+      return res.redirect('http://localhost:3000/login/callback?token=' + tokenObj.token)
+    }
   }
 
 }
