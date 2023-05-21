@@ -16,6 +16,11 @@ export class MediaController {
     return this.mediaService.uploadFile(file, dto.key);
   }
 
+  @Get(':uuid')
+  async getLink(@Param('uuid') uuid: string) {
+    return this.mediaService.getLink(uuid);
+  }
+
   @Delete(':uuid')
   async deleteFile(@Param('uuid') uuid: string) {
     return this.mediaService.deleteFile(uuid);

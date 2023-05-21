@@ -26,17 +26,32 @@ export class MediaService {
   async uploadFile(file: Express.Multer.File, key: string) {
     await this.s3.putObject({
       Bucket: this.S3_BUCKET,
-      Key: key,
+      Key: key+"/"+file.originalname,
       Body: file.buffer,
     }, (err, data) => {
       if (err) {
-        throw err;
+        console.log(err);
       }
     }).promise();
-    return this.mediaRepository.save({
-      name: file.originalname,
-      key: key,
-      size: file.size,
+    let media = await this.mediaRepository.findOne({where: {key: key+"/"+file.originalname}});
+    if (!media) {
+      media = await this.mediaRepository.save({
+        name: file.originalname,
+        key: key+"/"+file.originalname,
+        size: file.size,
+      });
+    }
+    return media;
+  }
+
+  async getLink(uuid: string) {
+    const media = await this.mediaRepository.findOne({where: {uuid}});
+    if (!media) {
+      throw new BadRequestException("Media not found");
+    }
+    return this.s3.getSignedUrlPromise('getObject', {
+      Bucket: this.S3_BUCKET,
+      Key: media.key,
     });
   }
 

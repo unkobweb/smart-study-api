@@ -38,7 +38,7 @@ export class AuthService {
     if (!user.secret2Fa) {
       const secret = speakeasy.generateSecret({ length: 20 });
       user.secret2Fa = secret.base32;
-      await this.usersService.update(user);
+      await this.usersService.update(user.uuid, user);
     }
 
     const qrCodeUrl = `otpauth://totp/${user.email}?secret=${user.secret2Fa}&issuer=Smart%20Study`;
@@ -60,7 +60,7 @@ export class AuthService {
       throw new BadRequestException(["invalid 2FA token"])
     }
     user.enabled2Fa = true;
-    await this.usersService.update(user);
+    await this.usersService.update(user.uuid, user);
     return { enabled2Fa: true }
   }
 

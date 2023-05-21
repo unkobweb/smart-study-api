@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
 import { Repository } from 'typeorm';
 import * as argon2 from "argon2";
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -16,15 +17,16 @@ export class UsersService {
   }
 
   async findOneByUuid(uuid: string): Promise<User | undefined> {
-    return this.usersRepository.findOne({ where: { uuid: uuid } })
+    return this.usersRepository.findOne({ where: { uuid: uuid }, relations: ["profilePicture"] })
   }
 
   async findOne(email: string): Promise<User | undefined> {
     return this.usersRepository.findOne({ where: { email: email } })
   }
 
-  async update(user: Partial<User>): Promise<User> {
-    return this.usersRepository.save(user);
+  async update(uuid: string, dto: Partial<User> | UpdateUserDto): Promise<User> {
+    await this.usersRepository.update(uuid, dto);
+    return this.usersRepository.findOne({ where: { uuid: uuid } });
   }
 
   async findOneOrCreate(user: Partial<User>) {
