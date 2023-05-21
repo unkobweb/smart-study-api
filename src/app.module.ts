@@ -7,6 +7,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { ConfigModule } from '@nestjs/config';
 import { EmailModule } from './email/email.module';
+import { MediaModule } from './media/media.module';
+import { Media } from './entities/media.entity';
 
 @Module({
   imports: [
@@ -18,13 +20,14 @@ import { EmailModule } from './email/email.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [User],
+      entities: [User, Media],
       synchronize: !!process.env.DB_SYNC || false,
     }),
     TypeOrmModule.forFeature([User]),
     AuthModule,
     EmailModule, 
-    UsersModule
+    UsersModule,
+    MediaModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Media } from "./media.entity";
 
 @Entity()
 export class User {
@@ -29,4 +30,7 @@ export class User {
   @Column({nullable: false, default: false})
   enabled2Fa: boolean;
   // TODO : add profile picture
+
+  @OneToOne(type => Media, media => media.user)
+  profilePicture: Media;
 }
