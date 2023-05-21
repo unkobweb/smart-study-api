@@ -21,6 +21,7 @@ import { EmailModule } from './email/email.module';
       entities: [User],
       synchronize: !!process.env.DB_SYNC || false,
     }),
+    TypeOrmModule.forFeature([User]),
     AuthModule,
     EmailModule, 
     UsersModule
