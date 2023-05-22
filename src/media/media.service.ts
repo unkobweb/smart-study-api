@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Media } from '../entities/media.entity';
 import * as aws from 'aws-sdk';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class MediaService {
@@ -24,20 +25,17 @@ export class MediaService {
   ) {}
 
   async uploadFile(file: Express.Multer.File, key: string) {
+    key = key+"/"+uuidv4()+file.originalname
     await this.s3.putObject({
       Bucket: this.S3_BUCKET,
-      Key: key+"/"+file.originalname,
+      Key: key,
       Body: file.buffer,
-    }, (err, data) => {
-      if (err) {
-        console.log(err);
-      }
     }).promise();
-    let media = await this.mediaRepository.findOne({where: {key: key+"/"+file.originalname}});
+    let media = await this.mediaRepository.findOne({where: {key: key}});
     if (!media) {
       media = await this.mediaRepository.save({
         name: file.originalname,
-        key: key+"/"+file.originalname,
+        key: key,
         size: file.size,
       });
     }
