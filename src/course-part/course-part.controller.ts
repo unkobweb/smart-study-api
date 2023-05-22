@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { CoursePartService } from './course_part.service';
-import { CreateCoursePartDto } from './dto/create-course_part.dto';
-import { UpdateCoursePartDto } from './dto/update-course_part.dto';
+import { CoursePartService } from './course-part.service';
+import { CreateCoursePartDto } from './dto/create-course-part.dto';
+import { UpdateCoursePartDto } from './dto/update-course-part.dto';
 
 @Controller('course-part')
 export class CoursePartController {

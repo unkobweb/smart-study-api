@@ -9,6 +9,8 @@ import { Course } from './entities/course.entity';
 import { ConfigModule } from '@nestjs/config';
 import { EmailModule } from './email/email.module';
 import { CoursesModule } from './courses/courses.module';
+import { CoursePart } from './entities/course-part.entity';
+import { CoursePartModule } from './course-part/course-part.module';
 
 @Module({
   imports: [
@@ -20,12 +22,14 @@ import { CoursesModule } from './courses/courses.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [User, Course],
+      entities: [User, Course, CoursePart],
       synchronize: !!process.env.DB_SYNC || false,
     }),
     AuthModule,
     EmailModule, 
-    UsersModule, CoursesModule
+    UsersModule, 
+    CoursesModule,
+    CoursePartModule
   ],
   controllers: [AppController],
   providers: [AppService],
