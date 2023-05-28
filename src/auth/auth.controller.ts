@@ -8,6 +8,8 @@ import { LinkedInOAuthGuard } from './guards/linkedin-oauth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import * as jwt from 'jsonwebtoken';
 
+const WEB_URL = process.env.WEB_URL || 'http://localhost:3000';
+
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -68,9 +70,9 @@ export class AuthController {
   ) {
     const tokenObj = await this.authService.googleLogin(req);
     if (tokenObj.type == '2fa') {
-      return res.redirect('http://localhost:3000/login/callback?mfatoken=' + tokenObj.token)
+      return res.redirect(`${WEB_URL}/login/callback?mfatoken=` + tokenObj.token)
     } else {
-      return res.redirect('http://localhost:3000/login/callback?token=' + tokenObj.token)
+      return res.redirect(`${WEB_URL}/login/callback?token=` + tokenObj.token)
     }
   }
 
@@ -86,9 +88,9 @@ export class AuthController {
   ) {
     const tokenObj: TokenObject = await this.authService.linkedInLogin(req);
     if (tokenObj.type == '2fa') {
-      return res.redirect('http://localhost:3000/login/callback?mfatoken=' + tokenObj.token)
+      return res.redirect(`${WEB_URL}/login/callback?mfatoken=` + tokenObj.token)
     } else {
-      return res.redirect('http://localhost:3000/login/callback?token=' + tokenObj.token)
+      return res.redirect(`${WEB_URL}/login/callback?token=` + tokenObj.token)
     }
   }
 
