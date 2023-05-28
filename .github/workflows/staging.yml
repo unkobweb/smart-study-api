@@ -54,4 +54,4 @@ jobs:
             git checkout staging
             git pull
             cd ..
-            docker-compose up -d api --build
+            docker compose up -d api --build
