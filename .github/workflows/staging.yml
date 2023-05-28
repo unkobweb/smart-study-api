@@ -50,7 +50,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            cd srv/smart-study/staging/smart-study-api
+            cd /srv/smart-study/staging/smart-study-api
             git checkout staging
             git pull
             cd ..
