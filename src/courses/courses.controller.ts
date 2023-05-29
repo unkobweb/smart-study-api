@@ -32,8 +32,9 @@ export class CoursesController {
     return this.coursesService.update(uuid, updateCourseDto);
   }
 
+  @UseGuards(JwtAuthGuard, UpdateCourseGuard)
   @Delete(':uuid')
-  remove(@Param('uuid') uuid: string) {
+  remove(@Param('uuid') uuid: string, @Body() updateCourseDto: UpdateCourseDto) {
     return this.coursesService.remove(uuid);
   }
 }

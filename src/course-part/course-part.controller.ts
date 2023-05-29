@@ -4,6 +4,7 @@ import { CreateCoursePartDto } from './dto/create-course-part.dto';
 import { UpdateCoursePartDto } from './dto/update-course-part.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CreateCoursePartGuard } from './guards/create-course-part.guard';
+import { UserOwnCoursePart } from './guards/user-own-course-part.guard';
 
 @Controller('course-part')
 export class CoursePartController {
@@ -21,16 +22,18 @@ export class CoursePartController {
     return this.coursePartService.findAll();
   }
 
-  @Get(':id')
+  @Get(':uuid')
   findOne(@Param('uuid') uuid: string) {
     return this.coursePartService.findOne(uuid);
   }
 
-  @Patch(':id')
+  @UseGuards(JwtAuthGuard, UserOwnCoursePart)
+  @Patch(':uuid')
   update(@Param('uuid') uuid: string, @Body() updateCoursePartDto: UpdateCoursePartDto) {
     return this.coursePartService.update(uuid, updateCoursePartDto);
   }
 
+  @UseGuards(JwtAuthGuard, UserOwnCoursePart)
   @Delete(':uuid')
   remove(@Param('uuid') uuid: string) {
     return this.coursePartService.remove(uuid);
