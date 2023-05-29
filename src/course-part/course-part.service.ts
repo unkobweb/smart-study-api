@@ -1,26 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCoursePartDto } from './dto/create-course-part.dto';
 import { UpdateCoursePartDto } from './dto/update-course-part.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { CoursePart } from 'src/entities/course-part.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class CoursePartService {
-  create(createCoursePartDto: CreateCoursePartDto) {
-    return 'This action adds a new coursePart';
+  constructor(
+    @InjectRepository(CoursePart) private coursePartRepository: Repository<CoursePart>,
+  ) { }
+
+  async create(createCoursePartDto: CreateCoursePartDto) {
+    return this.coursePartRepository.save(createCoursePartDto);
   }
 
   findAll() {
-    return `This action returns all coursePart`;
+    return this.coursePartRepository.find()
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} coursePart`;
+  findOne(uuid: string) {
+    return this.coursePartRepository.findOne({ where: { uuid: uuid } });;
   }
 
-  update(id: number, updateCoursePartDto: UpdateCoursePartDto) {
-    return `This action updates a #${id} coursePart`;
+  async update(uuid: string, updateCoursePartDto: UpdateCoursePartDto) {
+    await this.coursePartRepository.update(uuid, updateCoursePartDto);
+    return this.findOne(uuid);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} coursePart`;
+  remove(uuid: string) {
+    return this.coursePartRepository.softDelete(uuid);
   }
 }

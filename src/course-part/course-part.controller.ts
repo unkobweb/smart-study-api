@@ -1,14 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
 import { CoursePartService } from './course-part.service';
 import { CreateCoursePartDto } from './dto/create-course-part.dto';
 import { UpdateCoursePartDto } from './dto/update-course-part.dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { CreateCoursePartGuard } from './guards/create-course-part.guard';
 
 @Controller('course-part')
 export class CoursePartController {
   constructor(private readonly coursePartService: CoursePartService) {}
 
+  @UseGuards(JwtAuthGuard, CreateCoursePartGuard)
   @Post()
-  create(@Body() createCoursePartDto: CreateCoursePartDto) {
+  create(@Body() createCoursePartDto: CreateCoursePartDto, @Req() req) {
+    createCoursePartDto["user"] = req.user;
     return this.coursePartService.create(createCoursePartDto);
   }
 
@@ -18,17 +22,17 @@ export class CoursePartController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.coursePartService.findOne(+id);
+  findOne(@Param('uuid') uuid: string) {
+    return this.coursePartService.findOne(uuid);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCoursePartDto: UpdateCoursePartDto) {
-    return this.coursePartService.update(+id, updateCoursePartDto);
+  update(@Param('uuid') uuid: string, @Body() updateCoursePartDto: UpdateCoursePartDto) {
+    return this.coursePartService.update(uuid, updateCoursePartDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.coursePartService.remove(+id);
+  @Delete(':uuid')
+  remove(@Param('uuid') uuid: string) {
+    return this.coursePartService.remove(uuid);
   }
 }
