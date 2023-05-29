@@ -1,14 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, UseGuards } from '@nestjs/common';
 import { CourseChapterService } from './course-chapter.service';
 import { CreateCourseChapterDto } from './dto/create-course-chapter.dto';
 import { UpdateCourseChapterDto } from './dto/update-course-chapter.dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { CreateCourseChapterGuard } from './guards/create-course-chapter.guard';
 
 @Controller('course-chapter')
 export class CourseChapterController {
   constructor(private readonly courseChapterService: CourseChapterService) {}
 
+  @UseGuards(JwtAuthGuard, CreateCourseChapterGuard)
   @Post()
-  create(@Body() createCourseChapterDto: CreateCourseChapterDto) {
+  create(@Body() createCourseChapterDto: CreateCourseChapterDto, @Req() req) {
+    createCourseChapterDto["user"] = req.user;
     return this.courseChapterService.create(createCourseChapterDto);
   }
 

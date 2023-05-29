@@ -1,11 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCourseChapterDto } from './dto/create-course-chapter.dto';
 import { UpdateCourseChapterDto } from './dto/update-course-chapter.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { CourseChapter } from 'src/entities/course-chapter.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class CourseChapterService {
-  create(createCourseChapterDto: CreateCourseChapterDto) {
-    return 'This action adds a new courseChapter';
+  constructor(
+    @InjectRepository(CourseChapter) private courseChapterRepository: Repository<CourseChapter>,
+  ) { }
+
+  async create(createCourseChapterDto: CreateCourseChapterDto) {
+    return this.courseChapterRepository.save(createCourseChapterDto);
   }
 
   findAll() {

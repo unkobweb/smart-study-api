@@ -10,7 +10,7 @@ export class CourseChapter {
     @Column()
     title?: string;
 
-    @Column()
+    @Column({ nullable: true })
     description?: string;
 
     @CreateDateColumn()
