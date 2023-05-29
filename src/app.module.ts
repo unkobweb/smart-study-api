@@ -11,6 +11,8 @@ import { EmailModule } from './email/email.module';
 import { CoursesModule } from './courses/courses.module';
 import { CoursePart } from './entities/course-part.entity';
 import { CoursePartModule } from './course-part/course-part.module';
+import { CourseChapterModule } from './course-chapter/course-chapter.module';
+import { CourseChapter } from './entities/course-chapter.entity';
 
 @Module({
   imports: [
@@ -22,14 +24,15 @@ import { CoursePartModule } from './course-part/course-part.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [User, Course, CoursePart],
+      entities: [User, Course, CoursePart, CourseChapter],
       synchronize: !!process.env.DB_SYNC || false,
     }),
     AuthModule,
     EmailModule, 
     UsersModule, 
     CoursesModule,
-    CoursePartModule
+    CoursePartModule,
+    CourseChapterModule
   ],
   controllers: [AppController],
   providers: [AppService],
