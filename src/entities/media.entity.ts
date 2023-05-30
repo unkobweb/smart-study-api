@@ -15,6 +15,9 @@ export class Media {
   @Column()
   size: number;
 
+  @Column({ nullable: true })
+  url?: string;
+
   @CreateDateColumn()
   createdAt: Date;
 
