@@ -31,12 +31,17 @@ export class MediaService {
       Key: key,
       Body: file.buffer,
     }).promise();
+    const url = await this.s3.getSignedUrlPromise('getObject', {
+      Bucket: this.S3_BUCKET,
+      Key: key,
+    });
     let media = await this.mediaRepository.findOne({where: {key: key}});
     if (!media) {
       media = await this.mediaRepository.save({
         name: file.originalname,
         key: key,
         size: file.size,
+        url: url,
       });
     }
     return media;
