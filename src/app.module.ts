@@ -26,7 +26,7 @@ import { Media } from './entities/media.entity';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [User, Media, Course, CoursePart, CourseChapter],
+      entities: ["dist/entities/*.entity{.ts,.js}"],
       synchronize: !!process.env.DB_SYNC || false,
     }),
     TypeOrmModule.forFeature([User]),
