@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import { Course } from 'src/entities/course.entity';
-import { Repository } from 'typeorm';
+import { FindManyOptions, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
@@ -16,8 +16,8 @@ export class CoursesService {
     return this.courseRepository.save(createCourseDto);
   }
 
-  findAll() {
-    return this.courseRepository.find();
+  findAll(opts?: FindManyOptions) {
+    return this.courseRepository.find(opts);
   }
 
   async findOne(uuid: string) {

@@ -7,7 +7,7 @@ import { UpdateCourseGuard } from './guards/update-course.guard';
 
 @Controller('courses')
 export class CoursesController {
-  constructor(private readonly coursesService: CoursesService) {}
+  constructor(private readonly coursesService: CoursesService) { }
 
   @UseGuards(JwtAuthGuard)
   @Post()
@@ -16,9 +16,15 @@ export class CoursesController {
     return this.coursesService.create(createCourseDto);
   }
 
-  @Get()
-  findAll() {
-    return this.coursesService.findAll();
+  @UseGuards(JwtAuthGuard)
+  @Get('me')
+  findAll(@Req() req) {
+    return this.coursesService.findAll({
+      where: {
+        user: { uuid: req.user.uuid }
+      },
+      relations: ['user']
+    });
   }
 
   @Get(':uuid')
