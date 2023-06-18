@@ -21,18 +21,55 @@ export class CourseChapterController {
     return this.courseChapterService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.courseChapterService.findOne(+id);
+  @Get(':uuid')
+  findOne(@Param('uuid') uuid: string) {
+    return this.courseChapterService.findOne(uuid);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCourseChapterDto: UpdateCourseChapterDto) {
-    return this.courseChapterService.update(+id, updateCourseChapterDto);
+  @Patch(':uuid')
+  update(@Param('uuid') uuid: string, @Body() updateCourseChapterDto: UpdateCourseChapterDto) {
+    return this.courseChapterService.update(uuid, updateCourseChapterDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.courseChapterService.remove(+id);
+  @UseGuards(JwtAuthGuard)
+  @Delete(':uuid')
+  remove(@Param('uuid') uuid: string) {
+    return this.courseChapterService.remove(uuid);
   }
 }
+
+
+// @UseGuards(JwtAuthGuard)
+// @Post()
+// create(@Body() createCourseDto: CreateCourseDto, @Req() req) {
+//   createCourseDto["user"] = req.user
+//   return this.coursesService.create(createCourseDto);
+// }
+
+// @UseGuards(JwtAuthGuard)
+// @Get('me')
+// findAll(@Req() req) {
+//   return this.coursesService.findAll({
+//     where: {
+//       user: { uuid: req.user.uuid }
+//     },
+//     relations: ['user']
+//   });
+// }
+
+// @Get(':uuid')
+// findOne(@Param('uuid') uuid: string) {
+//   return this.coursesService.findOne(uuid);
+// }
+
+// @UseGuards(JwtAuthGuard, UpdateCourseGuard)
+// @Patch(':uuid')
+// update(@Param('uuid') uuid: string, @Body() updateCourseDto: UpdateCourseDto) {
+//   return this.coursesService.update(uuid, updateCourseDto);
+// }
+
+// @UseGuards(JwtAuthGuard, UpdateCourseGuard)
+// @Delete(':uuid')
+// remove(@Param('uuid') uuid: string, @Body() updateCourseDto: UpdateCourseDto) {
+//   return this.coursesService.remove(uuid);
+// }

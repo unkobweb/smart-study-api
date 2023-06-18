@@ -3,7 +3,7 @@ import { CreateCourseChapterDto } from './dto/create-course-chapter.dto';
 import { UpdateCourseChapterDto } from './dto/update-course-chapter.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CourseChapter } from 'src/entities/course-chapter.entity';
-import { Repository } from 'typeorm';
+import { FindManyOptions, Repository } from 'typeorm';
 
 @Injectable()
 export class CourseChapterService {
@@ -15,19 +15,20 @@ export class CourseChapterService {
     return this.courseChapterRepository.save(createCourseChapterDto);
   }
 
-  findAll() {
-    return `This action returns all courseChapter`;
+  findAll(opts?: FindManyOptions) {
+    return this.courseChapterRepository.find(opts);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} courseChapter`;
+  async findOne(uuid: string) {
+    return this.courseChapterRepository.findOne({ where: {uuid: uuid}});
   }
 
-  update(id: number, updateCourseChapterDto: UpdateCourseChapterDto) {
-    return `This action updates a #${id} courseChapter`;
+  async update(uuid: string, updateCourseChapterDto: UpdateCourseChapterDto) {
+    await this.courseChapterRepository.update(uuid, updateCourseChapterDto);
+    return this.findOne(uuid);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} courseChapter`;
+  remove(uuid: string) {
+    return this.courseChapterRepository.softDelete(uuid);
   }
 }
