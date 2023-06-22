@@ -21,7 +21,10 @@ export class CoursesService {
   }
 
   async findOne(uuid: string) {
-    return this.courseRepository.findOne({ where: {uuid: uuid}});
+    return this.courseRepository.findOne({ 
+      where: {uuid: uuid},
+      relations: ['courseParts', 'courseParts.courseChapters']
+    });
   }
 
   async update(uuid: string, updateCourseDto: UpdateCourseDto) {
