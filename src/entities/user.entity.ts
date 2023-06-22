@@ -1,5 +1,6 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, JoinColumn, PrimaryGeneratedColumn, OneToOne } from "typeorm";
 import { Course } from "./course.entity";
+import { Media } from "./media.entity";
 
 @Entity()
 export class User {
@@ -33,4 +34,8 @@ export class User {
 
   @OneToMany(type => Course, course => course.user)
   courses: Course[];
+  
+  @JoinColumn()
+  @OneToOne(type => Media, media => media.user)
+  profilePicture: Media;
 }

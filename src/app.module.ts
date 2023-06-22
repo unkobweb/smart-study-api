@@ -13,6 +13,8 @@ import { CoursePart } from './entities/course-part.entity';
 import { CoursePartModule } from './course-part/course-part.module';
 import { CourseChapterModule } from './course-chapter/course-chapter.module';
 import { CourseChapter } from './entities/course-chapter.entity';
+import { MediaModule } from './media/media.module';
+import { Media } from './entities/media.entity';
 
 @Module({
   imports: [
@@ -24,15 +26,17 @@ import { CourseChapter } from './entities/course-chapter.entity';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [User, Course, CoursePart, CourseChapter],
+      entities: [User, Media, Course, CoursePart, CourseChapter],
       synchronize: !!process.env.DB_SYNC || false,
     }),
+    TypeOrmModule.forFeature([User]),
     AuthModule,
-    EmailModule, 
-    UsersModule, 
+    EmailModule,
     CoursesModule,
     CoursePartModule,
-    CourseChapterModule
+    CourseChapterModule,
+    UsersModule,
+    MediaModule
   ],
   controllers: [AppController],
   providers: [AppService],
