@@ -9,6 +9,7 @@ import { ConfigModule } from '@nestjs/config';
 import { EmailModule } from './email/email.module';
 import { MediaModule } from './media/media.module';
 import { Media } from './entities/media.entity';
+import { FixturesModule } from './fixtures/fixtures.module';
 
 @Module({
   imports: [
@@ -27,7 +28,8 @@ import { Media } from './entities/media.entity';
     AuthModule,
     EmailModule, 
     UsersModule,
-    MediaModule
+    MediaModule,
+    FixturesModule
   ],
   controllers: [AppController],
   providers: [AppService],

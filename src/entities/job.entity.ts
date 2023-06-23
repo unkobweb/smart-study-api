@@ -11,6 +11,9 @@ export class Job {
   @Column()
   name: string;
 
+  @Column()
+  description: string;
+
   @OneToMany(() => AverageJobSalary, averageJobSalary => averageJobSalary.job)
   averageSalaries: AverageJobSalary[];
 
