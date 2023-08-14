@@ -4,9 +4,10 @@ import { CourseChapterController } from './course-chapter.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CoursePart } from 'src/entities/course-part.entity';
 import { CourseChapter } from 'src/entities/course-chapter.entity';
+import { MediaModule } from 'src/media/media.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([CoursePart, CourseChapter])],
+  imports: [TypeOrmModule.forFeature([CoursePart, CourseChapter]), MediaModule],
   controllers: [CourseChapterController],
   providers: [CourseChapterService]
 })
