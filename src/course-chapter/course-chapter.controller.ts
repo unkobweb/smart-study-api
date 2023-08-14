@@ -40,6 +40,7 @@ export class CourseChapterController {
 
   @Patch(':uuid')
   update(@Param('uuid') uuid: string, @Body() updateCourseChapterDto: UpdateCourseChapterDto) {
+    delete updateCourseChapterDto["user"];
     return this.courseChapterService.update(uuid, updateCourseChapterDto);
   }
 

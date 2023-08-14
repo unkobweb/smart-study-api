@@ -10,8 +10,8 @@ export class CourseChapter {
     @Column()
     title?: string;
 
-    @Column({ nullable: true })
-    description?: string;
+    @Column({ type: 'simple-json', default: {} })
+    description: object;
 
     @CreateDateColumn()
     created_at: Date;

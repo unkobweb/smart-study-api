@@ -23,6 +23,9 @@ export class Course {
   @Column({ nullable: true })
   price?: number;
 
+  @Column({ default: false })
+  is_published: boolean;
+
   @CreateDateColumn()
   created_at: Date;
 

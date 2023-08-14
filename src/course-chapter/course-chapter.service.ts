@@ -26,6 +26,7 @@ export class CourseChapterService {
   }
 
   async update(uuid: string, updateCourseChapterDto: UpdateCourseChapterDto) {
+    console.log('UpdateCourseChapterDto : ', updateCourseChapterDto)
     await this.courseChapterRepository.update(uuid, updateCourseChapterDto);
     return this.findOne(uuid);
   }
