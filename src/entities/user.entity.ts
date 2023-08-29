@@ -1,4 +1,5 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, JoinColumn, PrimaryGeneratedColumn, OneToOne } from "typeorm";
+import { Course } from "./course.entity";
 import { Media } from "./media.entity";
 
 @Entity()
@@ -31,6 +32,9 @@ export class User {
   enabled2Fa: boolean;
   // TODO : add profile picture
 
+  @OneToMany(type => Course, course => course.user)
+  courses: Course[];
+  
   @JoinColumn()
   @OneToOne(type => Media, media => media.user)
   profilePicture: Media;

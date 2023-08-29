@@ -58,6 +58,8 @@ $ pnpm run test:e2e
 $ pnpm run test:cov
 ```
 
+docker run -it --rm -p 7700:7700 -e MEILI_MASTER_KEY='Y_sKAls5iPB5I8bWA4g0mWNhPAiL2QGDXNPP61w-tLQ' -v ${pwd}/meili_data:/meili_data getmeili/meilisearch:v1.3
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
