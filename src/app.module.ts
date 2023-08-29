@@ -28,7 +28,7 @@ import { FixturesModule } from './fixtures/fixtures.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       entities: ["dist/entities/*.entity{.ts,.js}"],
-      synchronize: !!process.env.DB_SYNC || false,
+      synchronize: process.env.DB_SYNC === 'true' ? true : false,
     }),
     TypeOrmModule.forFeature([User]),
     AuthModule,
