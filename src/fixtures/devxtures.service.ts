@@ -15,11 +15,6 @@ export class DevxturesService implements OnModuleInit {
     const client = new MeiliSearch({ host: process.env.MEILISEARCH_HOST, apiKey: process.env.MEILISEARCH_MASTER_KEY})
 
     let jobs = await this.jobRepository.find()
-    //delete all jobs
-    if (jobs.length > 0) {
-      await this.jobRepository.remove(jobs)
-      console.info('Jobs fixtures deleted');
-    }
 
     if (jobs.length === 0) {
       const jobData = [
