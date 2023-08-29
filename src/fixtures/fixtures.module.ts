@@ -6,7 +6,7 @@ import { DevxturesService } from "./devxtures.service";
 const obj = {
   prod: [],
   development: [DevxturesService],
-  staging: []
+  staging: [DevxturesService]
 }
 
 @Module({
