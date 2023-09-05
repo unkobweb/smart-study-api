@@ -25,7 +25,7 @@ export class CourseChapterController {
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(@UploadedFile() file: Express.Multer.File, @Body() dto: UploadImageDto) {
-    return this.courseChapterService.uploadImage(file, dto.courseChapter);
+    return this.courseChapterService.uploadFile(file, dto);
   }
 
   @Get()

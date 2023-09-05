@@ -24,7 +24,7 @@ export class MediaService {
     private readonly mediaRepository: Repository<Media>,
   ) {}
 
-  async uploadFile(file: Express.Multer.File, key: string) {
+  async uploadFile(file: Express.Multer.File, key: string, extra?: any) {
     key = key+"/"+uuidv4()+file.originalname
     await this.s3.putObject({
       Bucket: this.S3_BUCKET,
@@ -38,6 +38,7 @@ export class MediaService {
     let media = await this.mediaRepository.findOne({where: {key: key}});
     if (!media) {
       media = await this.mediaRepository.save({
+        ...extra,
         name: file.originalname,
         key: key,
         size: file.size,

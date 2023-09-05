@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { CoursePart } from "./course-part.entity";
+import { Media } from "./media.entity";
 
 @Entity()
 export class CourseChapter {
@@ -24,4 +25,7 @@ export class CourseChapter {
 
     @ManyToOne(type => CoursePart, coursePart => coursePart.courseChapters)
     coursePart: CoursePart;
+
+    @OneToMany(type => Media, media => media.courseChapter)
+    documents: Media[];
 }

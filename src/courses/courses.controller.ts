@@ -23,7 +23,7 @@ export class CoursesController {
       where: {
         user: { uuid: req.user.uuid }
       },
-      relations: ['user']
+      relations: ['user','thumbnail']
     });
   }
 

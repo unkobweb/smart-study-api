@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CourseChapter } from 'src/entities/course-chapter.entity';
 import { FindManyOptions, Repository } from 'typeorm';
 import { MediaService } from 'src/media/media.service';
+import { UploadImageDto } from './dto/upload-image.dto';
 
 @Injectable()
 export class CourseChapterService {
@@ -35,9 +36,10 @@ export class CourseChapterService {
     return this.courseChapterRepository.softDelete(uuid);
   }
 
-  async uploadImage(file: Express.Multer.File, courseChapter: CourseChapter) {
+  async uploadFile(file: Express.Multer.File, dto: UploadImageDto) {
     console.log('File : ', file)
+    let courseChapter = dto.courseChapter
     courseChapter = await this.courseChapterRepository.findOne({ where: { uuid: courseChapter.uuid }, relations: ['coursePart', 'coursePart.course', 'coursePart.course.user'] })
-    return this.mediaService.uploadFile(file, `${courseChapter.coursePart.course.user.uuid}/${courseChapter.coursePart.course.uuid}/${courseChapter.coursePart.uuid}/${courseChapter.uuid}`)
+    return this.mediaService.uploadFile(file, `${courseChapter.coursePart.course.user.uuid}/${courseChapter.coursePart.course.uuid}/${courseChapter.coursePart.uuid}/${courseChapter.uuid}`, { courseChapter: courseChapter })
   }
 }

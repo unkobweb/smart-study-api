@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Job } from "./job.entity";
 
 @Entity()
@@ -17,4 +17,7 @@ export class JobOffer {
 
   @ManyToOne(() => Job, job => job.offers)
   job: Job;
+
+  @CreateDateColumn()
+  createdAt: Date;
 }

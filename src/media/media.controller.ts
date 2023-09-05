@@ -13,6 +13,7 @@ export class MediaController {
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(@UploadedFile() file: Express.Multer.File, @Body() dto: UploadDto) {
+    console.log("HERE");
     return this.mediaService.uploadFile(file, dto.key);
   }
 

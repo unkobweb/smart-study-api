@@ -1,5 +1,7 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 import { User } from "./user.entity";
+import { CourseChapter } from "./course-chapter.entity";
+import { Course } from "./course.entity";
 
 @Entity()
 export class Media {
@@ -29,4 +31,10 @@ export class Media {
 
   @OneToOne(type => User, user => user.profilePicture)
   user: User;
+
+  @ManyToOne(type => CourseChapter, courseChapter => courseChapter.documents)
+  courseChapter: CourseChapter;
+
+  @OneToOne(type => Course, course => course.thumbnail)
+  course: Course;
 }

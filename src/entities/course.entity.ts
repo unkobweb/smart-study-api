@@ -1,6 +1,7 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn ,UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn ,UpdateDateColumn } from "typeorm";
 import { User } from "./user.entity";
 import { CoursePart } from "./course-part.entity";
+import { Media } from "./media.entity";
 
 @Entity()
 export class Course {
@@ -15,29 +16,30 @@ export class Course {
   description?: string;
 
   @Column({ nullable: true })
-  thumbnail?: string;
-
-  @Column({ nullable: true })
   tags?: number;
 
   @Column({ nullable: true })
   price?: number;
 
   @Column({ default: false })
-  is_published: boolean;
+  isPublished: boolean;
 
   @CreateDateColumn()
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
-  updated_at: Date;
+  updatedAt: Date;
 
   @DeleteDateColumn()
-  deleted_at: Date;
+  deletedAt: Date;
 
   @ManyToOne(type => User, user => user.courses)
   user: User;
 
   @OneToMany(type => CoursePart, courseParts => courseParts.course)
   courseParts: CoursePart[];
+
+  @JoinColumn()
+  @OneToOne(type => Media, media => media.course)
+  thumbnail: Media;
 }

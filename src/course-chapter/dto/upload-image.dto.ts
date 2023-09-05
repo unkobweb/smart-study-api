@@ -5,4 +5,8 @@ export class UploadImageDto {
     @IsDefined()
     @IsString()
     courseChapter: CourseChapter;
+
+    @IsDefined()
+    @IsString()
+    filename: string;
 }

@@ -10,10 +10,6 @@ export class CreateCourseDto {
     description: string;
 
     @IsOptional()
-    @IsString()
-    thumbnail: string;
-
-    @IsOptional()
     @IsNumber()
     tags: number;
     
