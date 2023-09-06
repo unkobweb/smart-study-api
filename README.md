@@ -57,7 +57,7 @@ $ pnpm run test:e2e
 # test coverage
 $ pnpm run test:cov
 ```
-
+# A lancer avec Powershell
 docker run -it --rm -p 7700:7700 -e MEILI_MASTER_KEY='Y_sKAls5iPB5I8bWA4g0mWNhPAiL2QGDXNPP61w-tLQ' -v ${pwd}/meili_data:/meili_data getmeili/meilisearch:v1.3
 
 ## Support

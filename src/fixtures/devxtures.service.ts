@@ -55,7 +55,6 @@ export class DevxturesService implements OnModuleInit {
       const newAverageSalaries = []
       for(const job of jobs) {
         for( let i=0; i < 12; i++){
-          console.log(job)
           const month = new Date()
           month.setMonth(i)
           newAverageSalaries.push({

@@ -16,6 +16,7 @@ import { CourseChapter } from './entities/course-chapter.entity';
 import { MediaModule } from './media/media.module';
 import { Media } from './entities/media.entity';
 import { FixturesModule } from './fixtures/fixtures.module';
+import { JobsModule } from './jobs/jobs.module';
 
 @Module({
   imports: [
@@ -38,7 +39,8 @@ import { FixturesModule } from './fixtures/fixtures.module';
     CourseChapterModule,
     UsersModule,
     MediaModule,
-    FixturesModule
+    FixturesModule,
+    JobsModule
   ],
   controllers: [AppController],
   providers: [AppService],
