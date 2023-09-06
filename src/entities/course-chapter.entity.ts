@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { CoursePart } from "./course-part.entity";
 import { Media } from "./media.entity";
 
@@ -28,4 +28,8 @@ export class CourseChapter {
 
     @OneToMany(type => Media, media => media.courseChapter)
     documents: Media[];
+
+    @JoinColumn()
+    @OneToOne(type => Media, media => media.courseChapterVideo)
+    video: Media;
 }

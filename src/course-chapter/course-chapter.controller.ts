@@ -5,7 +5,7 @@ import { UpdateCourseChapterDto } from './dto/update-course-chapter.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CreateCourseChapterGuard } from './guards/create-course-chapter.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { UploadImageDto } from './dto/upload-image.dto';
+import { UploadMediaDto } from './dto/upload-media.dto';
 import { MediaService } from 'src/media/media.service';
 
 @Controller('course-chapter')
@@ -24,7 +24,7 @@ export class CourseChapterController {
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
-  async uploadFile(@UploadedFile() file: Express.Multer.File, @Body() dto: UploadImageDto) {
+  async uploadFile(@UploadedFile() file: Express.Multer.File, @Body() dto: UploadMediaDto) {
     return this.courseChapterService.uploadFile(file, dto);
   }
 

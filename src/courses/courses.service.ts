@@ -23,7 +23,7 @@ export class CoursesService {
   async findOne(uuid: string) {
     const course = await this.courseRepository.findOne({ 
       where: {uuid: uuid},
-      relations: ['courseParts', 'courseParts.courseChapters','thumbnail']
+      relations: ['courseParts', 'courseParts.courseChapters', 'courseParts.courseChapters.documents','courseParts.courseChapters.video','thumbnail']
     });
     return course;
   }

@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CourseChapter } from 'src/entities/course-chapter.entity';
 import { FindManyOptions, Repository } from 'typeorm';
 import { MediaService } from 'src/media/media.service';
-import { UploadImageDto } from './dto/upload-image.dto';
+import { UploadMediaDto } from './dto/upload-media.dto';
 
 @Injectable()
 export class CourseChapterService {
@@ -36,10 +36,14 @@ export class CourseChapterService {
     return this.courseChapterRepository.softDelete(uuid);
   }
 
-  async uploadFile(file: Express.Multer.File, dto: UploadImageDto) {
-    console.log('File : ', file)
-    let courseChapter = dto.courseChapter
-    courseChapter = await this.courseChapterRepository.findOne({ where: { uuid: courseChapter.uuid }, relations: ['coursePart', 'coursePart.course', 'coursePart.course.user'] })
+  async uploadFile(file: Express.Multer.File, dto: UploadMediaDto) {
+    const courseChapter = await this.courseChapterRepository.findOne({ where: { uuid: dto.courseChapter }, relations: ['coursePart', 'coursePart.course', 'coursePart.course.user'] })
+    if (dto.isVideo) {
+      const media = await this.mediaService.uploadFile(file, `${courseChapter.coursePart.course.user.uuid}/${courseChapter.coursePart.course.uuid}/${courseChapter.coursePart.uuid}/${courseChapter.uuid}`)
+      courseChapter.video = media
+      await this.courseChapterRepository.save(courseChapter)
+      return media
+    }
     return this.mediaService.uploadFile(file, `${courseChapter.coursePart.course.user.uuid}/${courseChapter.coursePart.course.uuid}/${courseChapter.coursePart.uuid}/${courseChapter.uuid}`, { courseChapter: courseChapter })
   }
 }

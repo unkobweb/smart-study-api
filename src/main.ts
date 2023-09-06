@@ -10,7 +10,7 @@ async function bootstrap() {
     console.log(req.method, req.url)
     next()
   })
-  app.useGlobalPipes(new ValidationPipe())
+  app.useGlobalPipes(new ValidationPipe({transform: true}))
   app.enableCors()
   await app.listen(8080);
 }
