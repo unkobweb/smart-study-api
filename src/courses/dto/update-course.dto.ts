@@ -1,7 +1,8 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateCourseDto } from './create-course.dto';
-import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsArray, IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
 import { Media } from '../../entities/media.entity';
+import { Jobs } from 'aws-sdk/clients/devicefarm';
 
 export class UpdateCourseDto extends PartialType(CreateCourseDto) {
     @IsOptional()
@@ -27,4 +28,8 @@ export class UpdateCourseDto extends PartialType(CreateCourseDto) {
     @IsOptional()
     @IsNumber()
     price: number;
+
+    @IsOptional()
+    @IsArray()
+    jobs: string[];
 }

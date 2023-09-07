@@ -2,6 +2,7 @@ import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToO
 import { User } from "./user.entity";
 import { CoursePart } from "./course-part.entity";
 import { Media } from "./media.entity";
+import { CourseJob } from "./course-job.entity";
 
 @Entity()
 export class Course {
@@ -42,4 +43,7 @@ export class Course {
   @JoinColumn()
   @OneToOne(type => Media, media => media.course)
   thumbnail: Media;
+
+  @OneToMany(type => CourseJob, courseJob => courseJob.course)
+  courseJobs: CourseJob[];
 }

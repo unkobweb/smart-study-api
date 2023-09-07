@@ -3,15 +3,13 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { MeiliSearch } from "meilisearch";
 import { Job } from "../entities/job.entity";
 import { Repository } from "typeorm";
-import { AverageJobSalary } from "src/entities/average-job-salary.entity";
 import { faker } from '@faker-js/faker';
 
 @Injectable()
 export class DevxturesService implements OnModuleInit {
   
   constructor(
-    @InjectRepository(Job) private readonly jobRepository: Repository<Job>,
-    @InjectRepository(AverageJobSalary) private readonly averageJobSalaryRepository: Repository<AverageJobSalary>,
+    @InjectRepository(Job) private readonly jobRepository: Repository<Job>
   ) {}
 
   async generate() {
@@ -38,32 +36,6 @@ export class DevxturesService implements OnModuleInit {
       jobs = await this.jobRepository.save(jobData)
       await client.index('job').addDocuments(jobs)
       console.info('Jobs fixtures generated');
-    }
-
-    let averageSalaries = await this.averageJobSalaryRepository.find()
-  
-    if (averageSalaries.length > 0) {
-      await this.averageJobSalaryRepository.remove(averageSalaries)
-      console.info('Average jobs salaries fixtures deleted');
-    }
-    if(averageSalaries.length === 0) {
-      const newAverageSalaries = []
-      for(const job of jobs) {
-        for( let i=0; i < 12; i++){
-          const month = new Date()
-          month.setMonth(i)
-          newAverageSalaries.push({
-            date : month,
-            avgSalary : faker.number.int({ min: 10, max: 100 }),
-            job : {uuid: job.uuid}
-          })
-        }
-      }
-      
-      await client.index('average_job_salary').deleteAllDocuments()
-      averageSalaries = await this.averageJobSalaryRepository.save(newAverageSalaries)
-      await client.index('average_job_salary').addDocuments(averageSalaries)
-      console.info('Average job salary fixtures generated');
     }
     
   }
