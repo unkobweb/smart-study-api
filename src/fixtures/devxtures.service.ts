@@ -3,14 +3,15 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { MeiliSearch } from "meilisearch";
 import { Job } from "../entities/job.entity";
 import { Repository } from "typeorm";
-import { JobOffer } from "../entities/job-offer.entity";
+import { AverageJobSalary } from "src/entities/average-job-salary.entity";
+import { faker } from '@faker-js/faker';
 
 @Injectable()
 export class DevxturesService implements OnModuleInit {
   
   constructor(
     @InjectRepository(Job) private readonly jobRepository: Repository<Job>,
-    @InjectRepository(JobOffer) private readonly jobOfferRepository: Repository<JobOffer>,
+    @InjectRepository(AverageJobSalary) private readonly averageJobSalaryRepository: Repository<AverageJobSalary>,
   ) {}
 
   async generate() {
@@ -39,25 +40,32 @@ export class DevxturesService implements OnModuleInit {
       console.info('Jobs fixtures generated');
     }
 
-    let jobOffers = await this.jobOfferRepository.find()
-
-    if (jobOffers.length === 0) {
-      for (const job of jobs) {
-        // create offer for each job and for each months
-        for (let i = 0; i < 12; i++) {
-          // create 5 offers for each month for each job
-          for (let j = 0; j < 5; j++) {
-            const offer = new JobOffer()
-            offer.title = `${job.name} ${i + 1}/${j + 1}`
-            offer.company = `Company ${i + 1}/${j + 1}`
-            offer.salary = Math.floor(Math.random() * 100000)
-            offer.job = job
-            offer.createdAt = new Date(2022, i, j + 1)
-            await this.jobOfferRepository.save(offer)
-          }
+    let averageSalaries = await this.averageJobSalaryRepository.find()
+  
+    if (averageSalaries.length > 0) {
+      await this.averageJobSalaryRepository.remove(averageSalaries)
+      console.info('Average jobs salaries fixtures deleted');
+    }
+    if(averageSalaries.length === 0) {
+      const newAverageSalaries = []
+      for(const job of jobs) {
+        for( let i=0; i < 12; i++){
+          const month = new Date()
+          month.setMonth(i)
+          newAverageSalaries.push({
+            date : month,
+            avgSalary : faker.number.int({ min: 10, max: 100 }),
+            job : {uuid: job.uuid}
+          })
         }
       }
+      
+      await client.index('average_job_salary').deleteAllDocuments()
+      averageSalaries = await this.averageJobSalaryRepository.save(newAverageSalaries)
+      await client.index('average_job_salary').addDocuments(averageSalaries)
+      console.info('Average job salary fixtures generated');
     }
+    
   }
 
   
