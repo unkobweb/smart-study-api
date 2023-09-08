@@ -15,6 +15,10 @@ export class DevxturesService implements OnModuleInit {
   async generate() {
     const client = new MeiliSearch({ host: process.env.MEILISEARCH_HOST, apiKey: process.env.MEILISEARCH_MASTER_KEY})
 
+    await client.createIndex('course',{primaryKey: 'uuid'})
+    await client.index('course').updateFilterableAttributes(['isPublished'])
+    await client.createIndex('job',{primaryKey: 'uuid'})
+
     let jobs = await this.jobRepository.find()
 
     if (jobs.length === 0) {
@@ -30,6 +34,18 @@ export class DevxturesService implements OnModuleInit {
         {
           name: "Product Owner",
           description: "Le product owner est en charge de la gestion du produit. Il est responsable de la définition des fonctionnalités et de la priorisation des tâches. Il travaille en étroite collaboration avec le développeur backend et le développeur frontend."
+        },
+        {
+          name: "Data Scientist",
+          description: "Le Data Scientist est en charge de la gestion des données. Il est responsable de la collecte, du traitement et de l'analyse des données. Il travaille en étroite collaboration avec le développeur backend et le product owner."
+        },
+        {
+          name: "Administrateur Système",
+          description: "L'administrateur système est en charge de la gestion des serveurs. Il est responsable de la configuration et de la maintenance des serveurs. Il travaille en étroite collaboration avec le développeur backend et le product owner."
+        },
+        {
+          name: "DevOps",
+          description: "Le DevOps est en charge de la gestion des serveurs. Il est responsable de la configuration et de la maintenance des serveurs. Il travaille en étroite collaboration avec le développeur backend et le product owner."
         }
       ]
       await client.index('job').deleteAllDocuments()

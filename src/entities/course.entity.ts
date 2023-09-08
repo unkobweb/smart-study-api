@@ -17,9 +17,6 @@ export class Course {
   description?: string;
 
   @Column({ nullable: true })
-  tags?: number;
-
-  @Column({ nullable: true })
   price?: number;
 
   @Column({ default: false })

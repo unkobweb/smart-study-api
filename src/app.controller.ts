@@ -20,6 +20,11 @@ export class AppController {
     return this.appService.getHello();
   }
 
+  @Get('meilisearch-key')
+  getMeilisearchKey(): Promise<string> {
+    return this.appService.getMeiliSearchKey();
+  }
+
   // @Get('email')
   // sendMailTest() {
   //   return this.emailService.sendEmail("sieg.alexandre@gmail.com", "Houston, we have a problem", "test", {name: "Alex", url: "https://www.google.com"})
