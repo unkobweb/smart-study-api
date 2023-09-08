@@ -4,15 +4,29 @@ import { User } from '../entities/user.entity';
 import { Repository } from 'typeorm';
 import * as argon2 from "argon2";
 import { UpdateUserDto } from './dto/update-user.dto';
-
+import Stripe from 'stripe';
 @Injectable()
 export class UsersService {
+
+  stripe: Stripe
+  
   constructor(
     @InjectRepository(User) private usersRepository: Repository<User>,
-  ) { }
+  ) { 
+    this.stripe = new Stripe(process.env.STRIPE_SECRET,{
+      apiVersion: '2023-08-16',
+    });
+  }
 
   async create(user: Partial<User>): Promise<User> {
     if (user.password) user.password = await argon2.hash(user.password);
+    const stripeCustomers = await this.stripe.customers.list({email: user.email});
+    if (stripeCustomers.data.length === 0) {
+      await this.stripe.customers.create({
+        email: user.email,
+        name: `${user.firstName} ${user.lastName}`,
+      });
+    }
     return this.usersRepository.save(user);
   }
 

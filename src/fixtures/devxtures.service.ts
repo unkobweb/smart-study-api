@@ -4,12 +4,14 @@ import { MeiliSearch } from "meilisearch";
 import { Job } from "../entities/job.entity";
 import { Repository } from "typeorm";
 import { faker } from '@faker-js/faker';
+import { Course } from "../entities/course.entity";
 
 @Injectable()
 export class DevxturesService implements OnModuleInit {
   
   constructor(
-    @InjectRepository(Job) private readonly jobRepository: Repository<Job>
+    @InjectRepository(Job) private readonly jobRepository: Repository<Job>,
+    @InjectRepository(Course) private readonly courseRepository: Repository<Course>,
   ) {}
 
   async generate() {
@@ -18,6 +20,12 @@ export class DevxturesService implements OnModuleInit {
     await client.createIndex('course',{primaryKey: 'uuid'})
     await client.index('course').updateFilterableAttributes(['isPublished'])
     await client.createIndex('job',{primaryKey: 'uuid'})
+
+    let courses = await this.courseRepository.find()
+
+    if (courses.length === 0) {
+      await client.index('course').deleteAllDocuments()
+    }
 
     let jobs = await this.jobRepository.find()
 

@@ -3,6 +3,7 @@ import { User } from "./user.entity";
 import { CoursePart } from "./course-part.entity";
 import { Media } from "./media.entity";
 import { CourseJob } from "./course-job.entity";
+import { Purchase } from "./purchase.entity";
 
 @Entity()
 export class Course {
@@ -47,4 +48,7 @@ export class Course {
 
   @OneToMany(type => CourseJob, courseJob => courseJob.course)
   courseJobs: CourseJob[];
+
+  @OneToMany(type => Purchase, purchase => purchase.course)
+  purchases: Purchase[];
 }

@@ -1,6 +1,7 @@
 import { Column, Entity, OneToMany, JoinColumn, PrimaryGeneratedColumn, OneToOne } from "typeorm";
 import { Course } from "./course.entity";
 import { Media } from "./media.entity";
+import { Purchase } from "./purchase.entity";
 
 @Entity()
 export class User {
@@ -38,4 +39,7 @@ export class User {
   @JoinColumn()
   @OneToOne(type => Media, media => media.user)
   profilePicture: Media;
+
+  @OneToMany(type => Purchase, purchase => purchase.user)
+  purchases: Purchase[];
 }

@@ -4,7 +4,9 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   console.log(process.env.NODE_ENV)
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    rawBody: true,
+  });
   // log each request done
   app.use((req, res, next) => {
     console.log(req.method, req.url)

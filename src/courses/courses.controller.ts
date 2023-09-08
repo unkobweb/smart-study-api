@@ -29,7 +29,7 @@ export class CoursesController {
 
   // TODO guard to know if the creator or a buyer
   @Get(':uuid')
-  findOne(@Param('uuid') uuid: string) {
+  findOne(@Req() req, @Param('uuid') uuid: string) {
     return this.coursesService.findOne(uuid);
   }
 
