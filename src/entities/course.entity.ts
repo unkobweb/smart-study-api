@@ -41,6 +41,10 @@ export class Course {
   @OneToOne(type => Media, media => media.course)
   thumbnail: Media;
 
+  @JoinColumn()
+  @OneToOne(type => Media, media => media.courseVideo)
+  video: Media;
+
   @OneToMany(type => CourseJob, courseJob => courseJob.course)
   courseJobs: CourseJob[];
 }

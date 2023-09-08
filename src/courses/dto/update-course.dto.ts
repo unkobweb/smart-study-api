@@ -18,6 +18,10 @@ export class UpdateCourseDto extends PartialType(CreateCourseDto) {
     thumbnail: Media;
 
     @IsOptional()
+    @IsString()
+    video: Media;
+
+    @IsOptional()
     @IsBoolean()
     isPublished: boolean;
 

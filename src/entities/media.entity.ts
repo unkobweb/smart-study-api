@@ -40,4 +40,7 @@ export class Media {
 
   @OneToOne(type => CourseChapter, courseChapter => courseChapter.video)
   courseChapterVideo: CourseChapter;
+
+  @OneToOne(type => Course, course => course.video)
+  courseVideo: Course;
 }

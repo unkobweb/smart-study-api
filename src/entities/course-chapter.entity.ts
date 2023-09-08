@@ -15,13 +15,13 @@ export class CourseChapter {
     description: object;
 
     @CreateDateColumn()
-    created_at: Date;
+    createdAt: Date;
 
     @UpdateDateColumn()
-    updated_at: Date;
+    updatedAt: Date;
 
     @DeleteDateColumn()
-    deleted_at: Date;
+    deletedAt: Date;
 
     @ManyToOne(type => CoursePart, coursePart => coursePart.courseChapters)
     coursePart: CoursePart;

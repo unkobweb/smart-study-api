@@ -29,11 +29,31 @@ export class CoursesService {
     return this.courseRepository.find(opts);
   }
 
-  async findOne(uuid: string) {
+  async findOne(uuid: string, preview?: boolean) {
+    const relations = ['courseJobs', 'courseJobs.job', 'courseParts', 'courseParts.courseChapters', 'thumbnail', 'video']
+    if (!preview) {
+      relations.push('courseParts.courseChapters.documents','courseParts.courseChapters.video')
+    }
+    // if preview, omit the courseChapter.description
     const course = await this.courseRepository.findOne({ 
       where: {uuid: uuid},
-      relations: ['courseJobs', 'courseJobs.job', 'courseParts', 'courseParts.courseChapters', 'courseParts.courseChapters.documents','courseParts.courseChapters.video','thumbnail']
+      order: {
+        courseParts: {
+          createdAt: 'ASC',
+          courseChapters: {
+            createdAt: 'ASC'
+          }
+        },
+      },
+      relations: relations
     });
+    if (preview) {
+      course.courseParts.forEach(part => {
+        part.courseChapters.forEach(chapter => {
+          chapter.description = undefined;
+        })
+      })
+    }
     return course;
   }
 
