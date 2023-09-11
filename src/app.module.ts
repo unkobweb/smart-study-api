@@ -17,6 +17,7 @@ import { MediaModule } from './media/media.module';
 import { Media } from './entities/media.entity';
 import { FixturesModule } from './fixtures/fixtures.module';
 import { JobsModule } from './jobs/jobs.module';
+import { JobSalariesModule } from './job-salaries/job-salaries.module';
 
 @Module({
   imports: [
@@ -40,7 +41,8 @@ import { JobsModule } from './jobs/jobs.module';
     UsersModule,
     MediaModule,
     FixturesModule,
-    JobsModule
+    JobsModule,
+    JobSalariesModule
   ],
   controllers: [AppController],
   providers: [AppService],

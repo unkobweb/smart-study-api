@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { AverageJobSalary } from "./average-job-salary.entity";
+import { JobSalary } from "./job-salary.entity";
 import { JobOffer } from "./job-offer.entity";
 import { JobCourse } from "./job-course.entity";
 
@@ -14,8 +14,8 @@ export class Job {
   @Column()
   description: string;
 
-  @OneToMany(() => AverageJobSalary, averageJobSalary => averageJobSalary.job)
-  averageSalaries: AverageJobSalary[];
+  @OneToMany(() => JobSalary, jobSalary => jobSalary.job)
+  averageSalaries: JobSalary[];
 
   @OneToMany(() => JobOffer, jobOffer => jobOffer.job)
   offers: JobOffer[];

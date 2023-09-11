@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Job } from "../entities/job.entity";
 import { DevxturesService } from "./devxtures.service";
-import { AverageJobSalary } from "src/entities/average-job-salary.entity";
+import { JobSalary } from "src/entities/job-salary.entity";
 
 const obj = {
   prod: [],
@@ -11,7 +11,7 @@ const obj = {
 }
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Job, AverageJobSalary])],
+  imports: [TypeOrmModule.forFeature([Job, JobSalary])],
   providers: obj[process.env.NODE_ENV],
 })
 export class FixturesModule {}
