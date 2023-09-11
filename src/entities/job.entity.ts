@@ -17,5 +17,5 @@ export class Job {
   averageSalaries: JobSalary[];
 
   @OneToMany(() => CourseJob, CourseJob => CourseJob.job)
-  CourseJobs: CourseJob[];
+  courseJobs: CourseJob[];
 }

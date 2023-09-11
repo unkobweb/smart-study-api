@@ -11,7 +11,7 @@ export class CourseJob {
   @ManyToOne(type => Course, course => course.courseJobs)
   course: Course;
 
-  @ManyToOne(type => Job, job => job.jobCourses)
+  @ManyToOne(type => Job, job => job.courseJobs)
   job: Job;
 
   @CreateDateColumn()
