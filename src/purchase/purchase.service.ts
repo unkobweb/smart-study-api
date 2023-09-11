@@ -26,7 +26,7 @@ export class PurchaseService {
   }
 
   async findUserCoursePurchase(courseUuid, user) {
-    return this.purchaseRepository.find({where: {user: {uuid: user.uuid}, course: {uuid: courseUuid}, completed: true}, relations: ['course']})
+    return this.purchaseRepository.findOne({where: {user: {uuid: user.uuid}, course: {uuid: courseUuid}, completed: true}, relations: ['course']})
   }
 
   async createCheckoutSession(user, dto) {

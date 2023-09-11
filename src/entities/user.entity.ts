@@ -2,6 +2,7 @@ import { Column, Entity, OneToMany, JoinColumn, PrimaryGeneratedColumn, OneToOne
 import { Course } from "./course.entity";
 import { Media } from "./media.entity";
 import { Purchase } from "./purchase.entity";
+import { UserChapterCompletion } from "./user-chapter-completion.entity";
 
 @Entity()
 export class User {
@@ -42,4 +43,7 @@ export class User {
 
   @OneToMany(type => Purchase, purchase => purchase.user)
   purchases: Purchase[];
+
+  @OneToMany(type => UserChapterCompletion, userChapterCompletion => userChapterCompletion.user)
+  userChapterCompletions: UserChapterCompletion[];
 }

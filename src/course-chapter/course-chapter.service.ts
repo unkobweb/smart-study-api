@@ -6,12 +6,14 @@ import { CourseChapter } from 'src/entities/course-chapter.entity';
 import { FindManyOptions, Repository } from 'typeorm';
 import { MediaService } from 'src/media/media.service';
 import { UploadMediaDto } from './dto/upload-media.dto';
+import { UserChapterCompletion } from '../entities/user-chapter-completion.entity';
 
 @Injectable()
 export class CourseChapterService {
   constructor(
     private readonly mediaService: MediaService,
     @InjectRepository(CourseChapter) private courseChapterRepository: Repository<CourseChapter>,
+    @InjectRepository(UserChapterCompletion) private userChapterCompletionRepository: Repository<UserChapterCompletion>
   ) { }
 
   async create(createCourseChapterDto: CreateCourseChapterDto) {
@@ -23,7 +25,7 @@ export class CourseChapterService {
   }
 
   async findOne(uuid: string) {
-    return this.courseChapterRepository.findOne({ where: { uuid: uuid } });
+    return this.courseChapterRepository.findOne({ where: { uuid: uuid }, relations: ['documents','video'] });
   }
 
   async update(uuid: string, updateCourseChapterDto: UpdateCourseChapterDto) {
@@ -34,6 +36,16 @@ export class CourseChapterService {
 
   remove(uuid: string) {
     return this.courseChapterRepository.softDelete(uuid);
+  }
+
+  async setComplete(uuid: string, completed: boolean, user) {
+    const userCompletion = await this.userChapterCompletionRepository.findOne({ where: { user: user, courseChapter: {uuid} } })
+
+    if (completed && !userCompletion) {
+      return this.userChapterCompletionRepository.save({ user: user, courseChapter: {uuid} })
+    } else if (!completed && userCompletion) {
+      return this.userChapterCompletionRepository.delete(userCompletion.uuid)
+    }
   }
 
   async uploadFile(file: Express.Multer.File, dto: UploadMediaDto) {

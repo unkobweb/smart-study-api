@@ -1,6 +1,7 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { CoursePart } from "./course-part.entity";
 import { Media } from "./media.entity";
+import { UserChapterCompletion } from "./user-chapter-completion.entity";
 
 @Entity()
 export class CourseChapter {
@@ -32,4 +33,7 @@ export class CourseChapter {
     @JoinColumn()
     @OneToOne(type => Media, media => media.courseChapterVideo)
     video: Media;
+
+    @OneToMany(type => UserChapterCompletion, userChapterCompletion => userChapterCompletion.courseChapter)
+    userChapterCompletions: UserChapterCompletion[];
 }

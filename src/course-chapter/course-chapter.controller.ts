@@ -7,6 +7,7 @@ import { CreateCourseChapterGuard } from './guards/create-course-chapter.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UploadMediaDto } from './dto/upload-media.dto';
 import { MediaService } from 'src/media/media.service';
+import { CompleteChapterDto } from './dto/complete-chapter.dto';
 
 @Controller('course-chapter')
 export class CourseChapterController {
@@ -42,6 +43,12 @@ export class CourseChapterController {
   update(@Param('uuid') uuid: string, @Body() updateCourseChapterDto: UpdateCourseChapterDto) {
     delete updateCourseChapterDto["user"];
     return this.courseChapterService.update(uuid, updateCourseChapterDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch(':uuid/complete')
+  setComplete(@Req() req, @Param('uuid') uuid: string, @Body() body: CompleteChapterDto) {
+    return this.courseChapterService.setComplete(uuid, body.completed, req.user);
   }
 
   @UseGuards(JwtAuthGuard)

@@ -27,15 +27,10 @@ export class CoursesController {
     });
   }
 
-  // TODO guard to know if the creator or a buyer
+  @UseGuards(JwtAuthGuard)
   @Get(':uuid')
   findOne(@Req() req, @Param('uuid') uuid: string) {
-    return this.coursesService.findOne(uuid);
-  }
-
-  @Get(':uuid/preview')
-  findOnePreview(@Param('uuid') uuid: string) {
-    return this.coursesService.findOne(uuid, true);
+    return this.coursesService.getCourse(uuid, req.user);
   }
 
   @UseGuards(JwtAuthGuard, UpdateCourseGuard)

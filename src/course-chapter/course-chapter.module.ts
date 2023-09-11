@@ -5,9 +5,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CoursePart } from 'src/entities/course-part.entity';
 import { CourseChapter } from 'src/entities/course-chapter.entity';
 import { MediaModule } from 'src/media/media.module';
+import { UserChapterCompletion } from '../entities/user-chapter-completion.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([CoursePart, CourseChapter]), MediaModule],
+  imports: [TypeOrmModule.forFeature([CoursePart, CourseChapter, UserChapterCompletion]), MediaModule],
   controllers: [CourseChapterController],
   providers: [CourseChapterService]
 })
