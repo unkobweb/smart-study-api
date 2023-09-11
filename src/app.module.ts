@@ -18,6 +18,7 @@ import { Media } from './entities/media.entity';
 import { FixturesModule } from './fixtures/fixtures.module';
 import { JobsModule } from './jobs/jobs.module';
 import { PurchaseModule } from './purchase/purchase.module';
+import { JobSalariesModule } from './job-salaries/job-salaries.module';
 
 @Module({
   imports: [
@@ -42,7 +43,8 @@ import { PurchaseModule } from './purchase/purchase.module';
     MediaModule,
     FixturesModule,
     JobsModule,
-    PurchaseModule
+    PurchaseModule,
+    JobSalariesModule
   ],
   controllers: [AppController],
   providers: [AppService],

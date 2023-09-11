@@ -1,4 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { JobSalary } from "./job-salary.entity";
 import { CourseJob } from "./course-job.entity";
 
 @Entity()
@@ -12,6 +13,9 @@ export class Job {
   @Column()
   description: string;
 
-  @OneToMany(() => CourseJob, courseJob => courseJob.job)
-  jobCourses: CourseJob[];
+  @OneToMany(() => JobSalary, jobSalary => jobSalary.job)
+  averageSalaries: JobSalary[];
+
+  @OneToMany(() => CourseJob, CourseJob => CourseJob.job)
+  CourseJobs: CourseJob[];
 }
