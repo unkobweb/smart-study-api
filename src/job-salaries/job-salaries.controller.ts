@@ -21,7 +21,7 @@ export class JobSalariesController {
     });
   }
 
-  @Get(':id')
+  @Get(':uuid')
   findOne(@Param('uuid') uuid: string) {
     return this.jobSalariesService.findOne(uuid);
   }

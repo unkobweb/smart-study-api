@@ -77,19 +77,19 @@ export class DevxturesService implements OnModuleInit {
         for( let i=0; i < 12; i++){
           const month = new Date()
           month.setMonth(i)
-          newAverageSalaries.push({
-            date : month,
-            website : 'PoleEmploi',
-            avgSalary : faker.number.int({ min: 10, max: 100 }),
-            nbOffers: faker.number.int({ min: 0, max: 1000 }),
-            job : {uuid: job.uuid}
-          })
+          for(const website of ['PoleEmploi', 'Google']){
+            newAverageSalaries.push({
+              date : month,
+              website : website,
+              avgSalary : faker.number.int({ min: 10, max: 100 }),
+              nbOffers: faker.number.int({ min: 0, max: 1000 }),
+              job : {uuid: job.uuid}
+            })
+          }
         }
       }
       
-      await client.index('average_job_salary').deleteAllDocuments()
       averageSalaries = await this.jobSalaryRepository.save(newAverageSalaries)
-      await client.index('average_job_salary').addDocuments(averageSalaries)
       console.info('Average job salary fixtures generated');
     }
   }
