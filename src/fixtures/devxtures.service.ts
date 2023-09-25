@@ -70,7 +70,7 @@ export class DevxturesService implements OnModuleInit {
       console.info('Jobs fixtures generated');
     }
 
-    
+    console.info({jobs, averageSalaries})
     if(averageSalaries.length === 0) {
       const newAverageSalaries = []
       console.info(jobs)
