@@ -7,6 +7,7 @@ async function bootstrap() {
   console.log(process.env.NODE_ENV)
   const app = await NestFactory.create(AppModule, {
     rawBody: true,
+    bodyParser: false,
   });
   // log each request done
   app.use((req, res, next) => {
