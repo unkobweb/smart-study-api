@@ -18,7 +18,7 @@ async function bootstrap() {
     origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
   })
-  app.use(ExcludeRawBodyMiddleware)
+  app.use(new ExcludeRawBodyMiddleware().use)
 
   app.useGlobalPipes(new ValidationPipe({transform: true}))
   await app.listen(8080);
