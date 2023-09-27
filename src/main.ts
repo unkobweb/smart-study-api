@@ -8,12 +8,15 @@ async function bootstrap() {
     rawBody: true,
   });
   // log each request done
+  app.enableCors({
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
+  })
+  app.useGlobalPipes(new ValidationPipe({transform: true}))
   app.use((req, res, next) => {
     console.log(req.method, req.url)
     next()
   })
-  app.useGlobalPipes(new ValidationPipe({transform: true}))
-  app.enableCors()
   await app.listen(8080);
 }
 bootstrap();

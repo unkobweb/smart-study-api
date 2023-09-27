@@ -70,10 +70,8 @@ export class DevxturesService implements OnModuleInit {
       console.info('Jobs fixtures generated');
     }
 
-    console.info({jobs, averageSalaries})
     if(averageSalaries.length === 0) {
       const newAverageSalaries = []
-      console.info(jobs)
       for(const job of jobs) {
         for( let i=0; i < 12; i++){
           const month = new Date()
@@ -89,8 +87,6 @@ export class DevxturesService implements OnModuleInit {
           }
         }
       }
-
-      console.info({newAverageSalaries})
       
       averageSalaries = await this.jobSalaryRepository.save(newAverageSalaries)
       console.info('Average job salary fixtures generated');
