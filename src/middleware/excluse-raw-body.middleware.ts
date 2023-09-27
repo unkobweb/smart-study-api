@@ -10,6 +10,7 @@ export class ExcludeRawBodyMiddleware implements NestMiddleware {
       // Si ce n'est pas la route à exclure, applique les middlewares json et urlencoded.
       json({ limit: '50mb' })(req, res, next);
       urlencoded({ limit: '50mb', extended: true })(req, res, next);
+      next();
     }
   }
 }
