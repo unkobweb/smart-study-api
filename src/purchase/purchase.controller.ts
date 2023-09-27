@@ -20,7 +20,7 @@ export class PurchaseController {
     let event = request.rawBody;
 
     const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
-    console.log({endpointSecret, event})
+    console.log({endpointSecret, event, request})
     if (endpointSecret) {
       // Get the signature sent by Stripe
       const signature = request.headers['stripe-signature'];
