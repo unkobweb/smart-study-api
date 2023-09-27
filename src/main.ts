@@ -1,8 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import { json, urlencoded } from 'express';
-import { ExcludeRawBodyMiddleware } from './middleware/excluse-raw-body.middleware';
+import { excludeUrlencodedBodyMiddleware } from './middleware/exclude-urlencoded-body.middleware';
+import { excludeJsonBodyMiddleware } from './middleware/exclude-json-bodyt.middleware';
 
 async function bootstrap() {
   console.log(process.env.NODE_ENV)
@@ -18,7 +18,9 @@ async function bootstrap() {
     origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
   })
-  app.use(new ExcludeRawBodyMiddleware().use)
+
+  app.use(excludeJsonBodyMiddleware)
+  app.use(excludeUrlencodedBodyMiddleware)
 
   app.useGlobalPipes(new ValidationPipe({transform: true}))
   await app.listen(8080);
