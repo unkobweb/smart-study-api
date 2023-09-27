@@ -9,6 +9,10 @@ async function bootstrap() {
     rawBody: true,
   });
   // log each request done
+  app.use((req, res, next) => {
+    console.log(req.method, req.url)
+    next()
+  })
   app.enableCors({
     origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
@@ -16,10 +20,6 @@ async function bootstrap() {
   app.use(json({limit: '50mb'}))
   app.use(urlencoded({limit: '50mb', extended: true}))
   app.useGlobalPipes(new ValidationPipe({transform: true}))
-  app.use((req, res, next) => {
-    console.log(req.method, req.url)
-    next()
-  })
   await app.listen(8080);
 }
 bootstrap();
