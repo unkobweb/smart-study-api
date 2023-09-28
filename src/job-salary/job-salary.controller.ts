@@ -1,19 +1,19 @@
 import { Controller, Get, Param, Req } from '@nestjs/common';
-import { JobSalariesService } from './job-salaries.service';
+import { JobSalaryService } from './job-salary.service';
 
 @Controller('job-salaries')
-export class JobSalariesController {
-  constructor(private readonly jobSalariesService: JobSalariesService) {}
+export class JobSalaryController {
+  constructor(private readonly JobSalaryService: JobSalaryService) {}
 
 
   // @Get()
   // findAll() {
-  //   return this.jobSalariesService.findAll();
+  //   return this.JobSalaryService.findAll();
   // }
 
   @Get('job')
   findAll(@Req() req) {
-    return this.jobSalariesService.findAll({
+    return this.JobSalaryService.findAll({
       where: {
         job: { uuid: req.job.uuid }
       },
@@ -23,7 +23,7 @@ export class JobSalariesController {
 
   @Get(':uuid')
   findOne(@Param('uuid') uuid: string) {
-    return this.jobSalariesService.findOne(uuid);
+    return this.JobSalaryService.findOne(uuid);
   }
 
 }

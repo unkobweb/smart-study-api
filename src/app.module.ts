@@ -18,7 +18,12 @@ import { Media } from './entities/media.entity';
 import { FixturesModule } from './fixtures/fixtures.module';
 import { JobsModule } from './jobs/jobs.module';
 import { PurchaseModule } from './purchase/purchase.module';
-import { JobSalariesModule } from './job-salaries/job-salaries.module';
+import { JobSalaryModule } from './job-salary/job-salary.module';
+import { JobSalary } from './entities/job-salary.entity';
+import { CourseJob } from './entities/course-job.entity';
+import { UserChapterCompletion } from './entities/user-chapter-completion.entity';
+import { Purchase } from './entities/purchase.entity';
+import { Job } from './entities/job.entity';
 
 @Module({
   imports: [
@@ -30,7 +35,7 @@ import { JobSalariesModule } from './job-salaries/job-salaries.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: ["dist/entities/*.entity{.ts,.js}"],
+      entities: [CourseChapter, CoursePart, Course, User, Media, JobSalary, CourseJob, UserChapterCompletion, Purchase, Job],
       synchronize: process.env.DB_SYNC === 'true' ? true : false
     }),
     TypeOrmModule.forFeature([User]),
@@ -44,7 +49,7 @@ import { JobSalariesModule } from './job-salaries/job-salaries.module';
     FixturesModule,
     JobsModule,
     PurchaseModule,
-    JobSalariesModule
+    JobSalaryModule
   ],
   controllers: [AppController],
   providers: [AppService],

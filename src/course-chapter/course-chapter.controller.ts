@@ -2,11 +2,11 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Req, UseGuards, UseI
 import { CourseChapterService } from './course-chapter.service';
 import { CreateCourseChapterDto } from './dto/create-course-chapter.dto';
 import { UpdateCourseChapterDto } from './dto/update-course-chapter.dto';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CreateCourseChapterGuard } from './guards/create-course-chapter.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UploadMediaDto } from './dto/upload-media.dto';
-import { MediaService } from 'src/media/media.service';
+import { MediaService } from '../media/media.service';
 import { CompleteChapterDto } from './dto/complete-chapter.dto';
 
 @Controller('course-chapter')

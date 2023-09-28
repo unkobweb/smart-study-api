@@ -1,7 +1,3 @@
-
-
-
-
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Job } from "./job.entity";
 

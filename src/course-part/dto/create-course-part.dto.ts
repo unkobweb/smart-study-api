@@ -1,5 +1,5 @@
 import { IsDefined, IsString } from "class-validator";
-import { Course } from "src/entities/course.entity";
+import { Course } from "../../entities/course.entity";
 
 export class CreateCoursePartDto {
     @IsDefined()

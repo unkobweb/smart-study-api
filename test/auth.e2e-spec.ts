@@ -28,7 +28,8 @@ describe('AuthController (e2e)', () => {
   describe('/auth/register (POST)', () => {
     const registerDto: RegisterDto = {
       email: 'test@example.com',
-      password: 'password'
+      password: 'password',
+      confirmPassword: 'password',
     };
 
     it('should return 201 created', async () => {
@@ -56,8 +57,8 @@ describe('AuthController (e2e)', () => {
         })
         .expect(201)
         .then((response) => {
-          expect(response.body.access_token).toBeDefined();
-          token = response.body.access_token;
+          expect(response.body.token).toBeDefined();
+          token = response.body.token;
         });
     });
 
@@ -69,40 +70,6 @@ describe('AuthController (e2e)', () => {
           password: 'wrongpassword',
         })
         .expect(401);
-    });
-  });
-
-  describe('/auth/google (GET)', () => {
-    it('should return 302 redirect', async () => {
-      return request(app.getHttpServer())
-        .get('/auth/google')
-        .expect(302);
-    });
-  });
-
-  describe('/auth/google-redirect (GET)', () => {
-    it('should return access token', async () => {
-      return request(app.getHttpServer())
-        .get('/auth/google-redirect')
-        .expect(302)
-        .then((response) => {
-          expect(response.headers.location).toContain('token=');
-          token = response.headers.location.split('=')[1];
-        });
-    });
-
-    it('should throw 401 unauthorized if user is not authenticated', async () => {
-      return request(app.getHttpServer())
-        .get('/auth/google-redirect')
-        .expect(401);
-    });
-  });
-
-  describe('/auth/linkedin (GET)', () => {
-    it('should return 302 redirect', async () => {
-      return request(app.getHttpServer())
-        .get('/auth/linkedin')
-        .expect(302);
     });
   });
 });

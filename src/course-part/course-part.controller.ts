@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } fro
 import { CoursePartService } from './course-part.service';
 import { CreateCoursePartDto } from './dto/create-course-part.dto';
 import { UpdateCoursePartDto } from './dto/update-course-part.dto';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CreateCoursePartGuard } from './guards/create-course-part.guard';
 import { UserOwnCoursePart } from './guards/user-own-course-part.guard';
 

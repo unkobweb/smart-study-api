@@ -1,10 +1,5 @@
 import { Controller, Get, Request, Post, UseGuards, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { AppService } from './app.service';
-// import { AuthService } from './auth/auth.service';
-import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
-import { TestGuard } from './users/test.guard';
-import { FileInterceptor } from '@nestjs/platform-express';
-// import { EmailService } from './email/email.service';
 
 @Controller()
 export class AppController {
@@ -14,7 +9,6 @@ export class AppController {
     // private readonly emailService: EmailService,
   ) { }
 
-  @UseGuards(TestGuard)
   @Get()
   getHello(): string {
     return this.appService.getHello();

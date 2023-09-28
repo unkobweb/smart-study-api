@@ -1,6 +1,6 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CoursePart } from 'src/entities/course-part.entity';
+import { CoursePart } from '../../entities/course-part.entity';
 import { Repository } from 'typeorm';
 
 

@@ -6,6 +6,11 @@ import { excludeJsonBodyMiddleware } from './middleware/exclude-json-bodyt.middl
 
 async function bootstrap() {
   console.log(process.env.NODE_ENV)
+  console.log(process.env.DB_HOST)
+  console.log(process.env.DB_PORT)
+  console.log(process.env.DB_USER)
+  console.log(process.env.DB_PASSWORD)
+  console.log(process.env.DB_NAME)
   const app = await NestFactory.create(AppModule, {
     rawBody: true,
   });

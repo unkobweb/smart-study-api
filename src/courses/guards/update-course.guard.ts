@@ -1,7 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Observable } from 'rxjs';
-import { Course } from 'src/entities/course.entity';
+import { Course } from '../../entities/course.entity';
 import { Repository } from 'typeorm';
 
 

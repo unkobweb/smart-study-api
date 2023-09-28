@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
-import { Course } from 'src/entities/course.entity';
+import { Course } from '../entities/course.entity';
 import { FindManyOptions, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CourseJob } from '../entities/course-job.entity';

@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { JobSalary } from 'src/entities/job-salary.entity';
+import { JobSalary } from '../entities/job-salary.entity';
 import { FindManyOptions, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
-export class JobSalariesService {
+export class JobSalaryService {
 
 
   constructor(

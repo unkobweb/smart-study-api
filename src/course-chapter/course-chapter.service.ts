@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { CreateCourseChapterDto } from './dto/create-course-chapter.dto';
 import { UpdateCourseChapterDto } from './dto/update-course-chapter.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CourseChapter } from 'src/entities/course-chapter.entity';
+import { CourseChapter } from '../entities/course-chapter.entity';
 import { FindManyOptions, Repository } from 'typeorm';
-import { MediaService } from 'src/media/media.service';
+import { MediaService } from '../media/media.service';
 import { UploadMediaDto } from './dto/upload-media.dto';
 import { UserChapterCompletion } from '../entities/user-chapter-completion.entity';
 

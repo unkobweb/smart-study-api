@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { MeiliSearch } from "meilisearch";
 import { Job } from "../entities/job.entity";
 import { Repository } from "typeorm";
-import { JobSalary } from "src/entities/job-salary.entity";
+import { JobSalary } from "../entities/job-salary.entity";
 import { faker } from '@faker-js/faker';
 import { Course } from "../entities/course.entity";
 
